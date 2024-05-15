@@ -1,0 +1,27 @@
+{% load static%}
+
+<!-- treatment section -->
+
+<section class="treatment_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>Todas as <span>Disciplinas</span></h2>
+    </div>
+    <div class="row">
+      {% for d in Disciplina %}
+      <div class="col-md-6 col-lg-3">
+        <div class="box">
+          <div class="detail-box">
+            <h4>{{d.nome}}</h4>
+            <p>Professor: {{d.professor}}</p>
+            <p>Carga Horaria da Disciplina : {{d.carga_horaria}}</p>
+            <a href=""> Read More </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- end treatment section -->

@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Horários</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <!-- Adicione outras importações de estilo aqui, se necessário -->
+    <style>
+      th {
+        background-color: #c61700ea; /* Define a cor de fundo do cabeçalho */
+        color: #ffffff; /* Define a cor do texto do cabeçalho */
+      }
+
+      td,
+      th {
+        text-align: center; /* Centraliza o conteúdo das células */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Horários</h1>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Horários</th>
+            {% for dia in dias_semana %}
+            <th>{{ dia }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for horario_inicial, horario_final in horarios %}
+          <tr>
+            <td>
+              {{ horario_inicial|default:'' }} - {{ horario_final|default:'' }}
+            </td>
+            {% for dia in dias_semana %}
+            <td></td>
+            <!-- Célula vazia para disciplina -->
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Adicione outras importações de script aqui, se necessário -->
+  </body>
+</html>

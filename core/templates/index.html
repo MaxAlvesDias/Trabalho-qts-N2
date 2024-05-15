@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  {% include 'slider_section.html' %}
+
+  {% include 'qts.html' %}
+
+  {% include 'bookSection.html' %}
+  
+  {% include 'sobre.html' %}
+  <!-- end treatment section -->
+
+<!-- team section -->
+   {% include 'professor.html' %}
+<!-- end team section -->
+
+  <!-- client section -->
+ {% include 'cliente.html' %}
+  <!-- end client section -->
+
+  <!-- contact section -->
+{% include 'contato.html' %}
+  <!-- end contact section -->
+
+  <!-- info section -->
+{% include 'info.html' %}
+  <!-- end info_section -->
+
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="https://html.design/">Free Html Templates</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  {% endblock %}
