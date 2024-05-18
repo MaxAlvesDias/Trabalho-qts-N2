@@ -33,14 +33,11 @@
           </tr>
         </thead>
         <tbody>
-          {% for horario_inicial, horario_final in horarios %}
+          {% for periodo in Horarios %}
           <tr>
-            <td>
-              {{ horario_inicial|default:'' }} - {{ horario_final|default:'' }}
-            </td>
+            <td>{{ periodo }}</td>
             {% for dia in dias_semana %}
             <td></td>
-            <!-- Célula vazia para disciplina -->
             {% endfor %}
           </tr>
           {% endfor %}
