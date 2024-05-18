@@ -9,6 +9,7 @@ class Base(models.Model):
     class Meta:
         abstract = True
 
+
 class DiasSemana(Base):
     Dias_Choices = [
         ('seg', 'Segunda-feira'),
@@ -18,43 +19,30 @@ class DiasSemana(Base):
         ('sex', 'Sexta-feira'),
     ]
     dia = models.CharField('Dia', max_length=3, choices=Dias_Choices)
-    horario_1_inicio = models.TimeField('1º Horário de início', default=None, null=True, blank=True)
-    horario_1_fim = models.TimeField('1º Horário de fim', default=None, null=True, blank=True)
-    horario_2_inicio = models.TimeField('2º Horário de início', default=None, null=True, blank=True)
-    horario_2_fim = models.TimeField('2º Horário de fim', default=None, null=True, blank=True)
-    horario_3_inicio = models.TimeField('3º Horário de início', default=None, null=True, blank=True)
-    horario_3_fim = models.TimeField('3º Horário de fim', default=None, null=True, blank=True)
-    horario_4_inicio = models.TimeField('4º Horário de início', default=None, null=True, blank=True)
-    horario_4_fim = models.TimeField('4º Horário de fim', default=None, null=True, blank=True)
 
     def __str__(self):
-        horarios = [self.horario_1_inicio, self.horario_1_fim,
-                    self.horario_2_inicio, self.horario_2_fim,
-                    self.horario_3_inicio, self.horario_3_fim,
-                    self.horario_4_inicio, self.horario_4_fim]
-        horarios_str = [f"{inicio.strftime('%H:%M')} às {fim.strftime('%H:%M')}" if inicio and fim else '' 
-                        for inicio, fim in zip(horarios[::2], horarios[1::2])]
-        return f"{self.get_dia_display()} - {' - '.join(horarios_str)}"       
-        
-        
+        return self.get_dia_display()
 
-class Disciplina(Base):
-    nome = models.CharField('Nome',max_length=100)
-    carga_horaria = models.IntegerField('Carga horaria')
-    professor = models.ForeignKey('core.Professor', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Professor')
-
-    class Meta:
-        verbose_name= 'Disciplina'
+class Horario(Base):
+    periodo_choices = [
+        ('1º Período', '1º Período'),
+        ('2º Período', '2º Período'),
+        ('3º Período', '3º Período'),
+        ('4º Período', '4º Período'),
+    ]
+    periodo = models.CharField('Período', max_length=20, choices=periodo_choices)
+    inicio = models.TimeField('Horário de início')
+    fim = models.TimeField('Horário de fim')
 
     def __str__(self):
-        return self.nome
-
+        return f"{self.get_periodo_display()}: {self.inicio.strftime('%H:%M')} - {self.fim.strftime('%H:%M')}"
+        
+        
 
 class Professor(Base):
     nome = models.CharField('Nome', max_length=100)
     bio = models.TextField('Bio', max_length= 200)
     imagem = StdImageField('Imagem', upload_to = 'professor', variations= {'thumb':{'width': 200,'height':200,'crop':True}})
-    disponibilidade = models.ManyToManyField(DiasSemana, verbose_name='Disponibilidade')
     facebook = models.CharField('facebook',max_length=100,default='#')
     instagram = models.CharField('instagram',max_length=100,default='#')
     linkedin = models.CharField('linkedIn',max_length=100,default='#')
@@ -66,3 +54,38 @@ class Professor(Base):
 
     def __str__(self):
         return self.nome
+
+class Disciplina(Base):
+    nome = models.CharField('Nome',max_length=100)
+    carga_horaria = models.IntegerField('Carga horaria')
+    Professor = models.ManyToManyField(Professor, verbose_name='Professores', related_name='disciplinas')
+
+    class Meta:
+        verbose_name= 'Disciplina'
+        verbose_name_plural = 'Disciplinas'
+
+    def __str__(self):
+        return self.nome
+
+
+
+class turma(Base):
+    nome = models.CharField('Nome', max_length=100)
+
+class Disponibilidade(Base):
+    semana = models.ManyToManyField(DiasSemana, verbose_name='Disponibilidade')
+    professor = models.ManyToManyField(Professor, verbose_name='Professores')
+
+    def __str__(self):
+        return self.get_professores()
+
+    def get_professores(self):
+        return ", ".join([professor.nome for professor in self.professor.all()])
+    
+class QTS(Base):
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+    disciplina = models.ForeignKey(Disciplina, on_delete=models.CASCADE)
+    disponibilidade = models.ForeignKey(Disponibilidade, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.professor.nome} - {self.disciplina.nome}"
