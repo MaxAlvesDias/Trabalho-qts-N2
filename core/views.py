@@ -32,6 +32,12 @@ class IndexView(TemplateView):
     
     def create_qts_matrices(self, quantidade):
         qts_matrices = {}
+        qts_segunda = None
+        qts_terca = None
+        qts_quarta = None
+        qts_quinta = None
+        qts_sexta = None
+
 
         for i in range(quantidade):
             qts_matriz = [
@@ -47,74 +53,161 @@ class IndexView(TemplateView):
 
             for disciplina in disciplinas:
                 for professor in professores:
-                    disponibilidade = Disponibilidade.objects.filter(
+
+                    #QTS para o dias de segunda-feira
+                    disponibilidade_segunda = Disponibilidade.objects.filter(
                         professor=professor,
                         semana__dia= 'seg'
                     ).first()
 
-                    if disponibilidade:
-                        qts_criado = QTS.objects.filter(professor=professor).first()
+                    if disponibilidade_segunda:
+                        qts_criado_segunda = QTS.objects.filter(
+                            professor=professor,
+                            disciplina = disciplina,
+                            disponibilidade = disponibilidade_segunda
+                            ).first()
                         
 
-                        if not qts_criado:
-                            qts = QTS.objects.create(
+                        if not qts_criado_segunda:
+                            qts_segunda = QTS.objects.create(
                                 professor=professor,
                                 disciplina=disciplina,
-                                disponibilidade=disponibilidade
+                                disponibilidade = disponibilidade_segunda
                             )
+                        
+                        else:
+                            qts_segunda = qts_criado_segunda
 
                             
-                            qts_matriz[0][0] = "Horários"
-                            qts_matriz[0][1] = get_object_or_404(DiasSemana, dia='seg')
-                            qts_matriz[0][2] = get_object_or_404(DiasSemana, dia='ter')
-                            qts_matriz[0][3] = get_object_or_404(DiasSemana, dia='qua')
-                            qts_matriz[0][4] = get_object_or_404(DiasSemana, dia='qui')
-                            qts_matriz[0][5] = get_object_or_404(DiasSemana, dia='sex')
+                        
+                        
+                        qts_matriz[0][0] = "Horários"
+                        qts_matriz[0][1] = get_object_or_404(DiasSemana, dia='seg')
+                        qts_matriz[0][2] = get_object_or_404(DiasSemana, dia='ter')
+                        qts_matriz[0][3] = get_object_or_404(DiasSemana, dia='qua')
+                        qts_matriz[0][4] = get_object_or_404(DiasSemana, dia='qui')
+                        qts_matriz[0][5] = get_object_or_404(DiasSemana, dia='sex')
 
-                            qts_matriz[1][0] = get_object_or_404(Horario, periodo='1º Período')
-                            qts_matriz[2][0] = get_object_or_404(Horario, periodo='2º Período')
-                            qts_matriz[3][0] = get_object_or_404(Horario, periodo='3º Período')
-                            qts_matriz[4][0] = get_object_or_404(Horario, periodo='4º Período')
+                        qts_matriz[1][0] = get_object_or_404(Horario, periodo='1º Período')
+                        qts_matriz[2][0] = get_object_or_404(Horario, periodo='2º Período')
+                        qts_matriz[3][0] = get_object_or_404(Horario, periodo='3º Período')
+                        qts_matriz[4][0] = get_object_or_404(Horario, periodo='4º Período')
 
-                            if disciplina.carga_horaria == 80:
-                                qts_matriz[1][1] = qts
-                                qts_matriz[2][1] = qts
-                                qts_matriz[3][1] = qts
-                                qts_matriz[4][1] = qts
-                                break
-                            elif disciplina.carga_horaria == 60:
-                                qts_matriz[1][1] = qts
-                                qts_matriz[2][1] = qts
-                                qts_matriz[3][1] = qts
-                                qts_matriz[4][1] = '-'
-                                break
-                            elif disciplina.carga_horaria == 40:
-                                qts_matriz[1][1] = qts
-                                qts_matriz[2][1] = qts
+                        if disciplina.carga_horaria == 80:
+                            qts_matriz[1][1] = qts_segunda
+                            qts_matriz[2][1] = qts_segunda
+                            qts_matriz[3][1] = qts_segunda
+                            qts_matriz[4][1] = qts_segunda
+                            
+                        elif disciplina.carga_horaria == 60:
+                            qts_matriz[1][1] = qts_segunda
+                            qts_matriz[2][1] = qts_segunda
+                            qts_matriz[3][1] = qts_segunda
+                            qts_matriz[4][1] = '-'
+                            
+                        elif disciplina.carga_horaria == 40:
+                            qts_matriz[1][1] = qts_segunda
+                            qts_matriz[2][1] = qts_segunda
 
-                                for disciplina in disciplinas:
-                                    for professor in professores:
-                                        disponibilidade = Disponibilidade.objects.filter(
-                                            professor=professor,
-                                            semana__dia='seg'
+                            for disciplina in disciplinas:
+                                for professor in professores:
+                                    disponibilidade = Disponibilidade.objects.filter(
+                                        professor= professor,
+                                        semana__dia='seg'
+                                    ).first()
+
+                                    if disponibilidade:
+                                        qts_criado_segunda = QTS.objects.filter(
+                                            professor= professor,
+                                            disciplina = disciplina,
+                                            disponibilidade = disponibilidade
                                         ).first()
-                                        if disponibilidade:
-                                            qts_criado = QTS.objects.filter(
-                                                professor=professor,
-                                                disciplina = disciplina
-                                            ).first()
                                             
-                                            if not qts_criado:
-                                                qts = QTS.objects.create(
-                                                    professor=professor,
-                                                    disciplina=disciplina,
-                                                    disponibilidade=disponibilidade
-                                                )
+                                        if not qts_criado_segunda:
+                                            qts_segunda = QTS.objects.create(
+                                                professor=professor,
+                                                disciplina=disciplina,
+                                                disponibilidade=disponibilidade
+                                            )
+                                        if qts_criado_segunda:
+                                            qts_segunda = qts_criado_segunda
 
-                                                if disciplina.carga_horaria == 40:
-                                                    qts_matriz[3][1] = qts
-                                                    qts_matriz[4][1] = qts
-                                                    break
+                                            if disciplina.carga_horaria == 40:
+                                                qts_matriz[3][1] = qts_segunda
+                                                qts_matriz[4][1] = qts_segunda
+
+            for disciplina_terca in disciplinas:
+                for professor_terca in professores:
+
+                    disponibilidade_terca = Disponibilidade.objects.filter(
+                        professor=professor_terca,
+                        semana__dia= 'ter'
+                    ).first()                
+
+                    if disponibilidade_terca:
+                        qts_criado_terca = QTS.objects.filter(
+                            professor=professor_terca,
+                            disciplina = disciplina_terca,
+                            disponibilidade = disponibilidade_terca
+                            ).first()
+                        
+                                                
+
+                        if not qts_criado_terca:
+                            qts_terca = QTS.objects.create(
+                                professor=professor_terca,
+                                disciplina=disciplina_terca,
+                                disponibilidade=disponibilidade_terca
+                            )
+                        
+                        else:
+                            qts_terca = qts_criado_terca
+
+
+                        if disciplina.carga_horaria == 80 and qts_segunda.disciplina != qts_terca.disciplina:
+                            qts_matriz[1][2] = qts_terca
+                            qts_matriz[2][2] = qts_terca
+                            qts_matriz[3][2] = qts_terca
+                            qts_matriz[4][2] = qts_terca
+                            
+                        elif disciplina.carga_horaria == 60 and qts_segunda.disciplina != qts_terca.disciplina:
+                            qts_matriz[1][2] = qts_terca
+                            qts_matriz[2][2] = qts_terca
+                            qts_matriz[3][2] = qts_terca
+                            qts_matriz[4][2] = '-'
+                            
+                        elif disciplina.carga_horaria == 40 and qts_segunda.disciplina != qts_terca.disciplina:
+                            qts_matriz[1][2] = qts_terca
+                            qts_matriz[2][2] = qts_terca
+
+                            for disciplina in disciplinas:
+                                for professor in professores:
+                                    disponibilidade_terca = Disponibilidade.objects.filter(
+                                        professor= professor,
+                                        semana__dia='ter'
+                                    ).first()
+
+                                    if disponibilidade_terca:
+                                        qts_criado_terca = QTS.objects.filter(
+                                            professor= professor,
+                                            disciplina = disciplina,
+                                            disponibilidade = disponibilidade_terca
+                                        ).first()
+                                            
+                                        if not qts_criado_terca:
+                                            qts_terca = QTS.objects.create(
+                                                professor=professor_terca,
+                                                disciplina=disciplina_terca,
+                                                disponibilidade=disponibilidade_terca
+                                            )
+                                        if qts_criado_terca:
+                                            qts_terca = qts_criado_terca
+
+                                            if disciplina.carga_horaria == 40 and qts_segunda.disciplina != qts_terca.disciplina:
+                                                qts_matriz[3][2] = qts_terca
+                                                qts_matriz[4][2] = qts_terca 
+
+                                            
                 
             qts_matrices[i] = qts_matriz
     
