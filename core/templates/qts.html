@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,26 +22,54 @@
   <body>
     <div class="container">
       <h1>Horários</h1>
+      {% for key, qts_matriz in qts_resultados.items %}
       <table class="table table-bordered">
         <thead>
           <tr>
             <th>Horários</th>
-            {% for dia in dias_semana %}
-            <th>{{ dia }}</th>
-            {% endfor %}
+            <th>{{ DiasSemana.0 }}</th>
+            <th>{{ DiasSemana.1 }}</th>
+            <th>{{ DiasSemana.2 }}</th>
+            <th>{{ DiasSemana.3 }}</th>
+            <th>{{ DiasSemana.4 }}</th>
           </tr>
         </thead>
         <tbody>
-          {% for periodo in Horarios %}
           <tr>
-            <td>{{ periodo }}</td>
-            {% for dia in dias_semana %}
-            <td></td>
-            {% endfor %}
+            <td>1º Período</td>
+            <td>{{ qts_matriz.1.1 }}</td>
+            <td>{{ qts_matriz.1.2 }}</td>
+            <td>{{ qts_matriz.1.3 }}</td>
+            <td>{{ qts_matriz.1.4 }}</td>
+            <td>{{ qts_matriz.1.5 }}</td>
           </tr>
-          {% endfor %}
+          <tr>
+            <td>2º Período</td>
+            <td>{{ qts_matriz.2.1 }}</td>
+            <td>{{ qts_matriz.2.2 }}</td>
+            <td>{{ qts_matriz.2.3 }}</td>
+            <td>{{ qts_matriz.2.4 }}</td>
+            <td>{{ qts_matriz.2.5 }}</td>
+          </tr>
+          <tr>
+            <td>3º Período</td>
+            <td>{{ qts_matriz.3.1 }}</td>
+            <td>{{ qts_matriz.3.2 }}</td>
+            <td>{{ qts_matriz.3.3 }}</td>
+            <td>{{ qts_matriz.3.4 }}</td>
+            <td>{{ qts_matriz.3.5 }}</td>
+          </tr>
+          <tr>
+            <td>4º Período</td>
+            <td>{{ qts_matriz.4.1 }}</td>
+            <td>{{ qts_matriz.4.2 }}</td>
+            <td>{{ qts_matriz.4.3 }}</td>
+            <td>{{ qts_matriz.4.4 }}</td>
+            <td>{{ qts_matriz.4.5 }}</td>
+          </tr>
         </tbody>
       </table>
+      {% endfor %}
     </div>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <!-- Adicione outras importações de script aqui, se necessário -->
