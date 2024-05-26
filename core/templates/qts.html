@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,26 +22,39 @@
   <body>
     <div class="container">
       <h1>Horários</h1>
+      {% for i in qts_resultados %}
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Horários</th>
-            {% for dia in dias_semana %}
-            <th>{{ dia }}</th>
+            {% for header in qts_resultados.0.0 %}
+            <th>{{ header }}</th>
             {% endfor %}
           </tr>
         </thead>
         <tbody>
-          {% for periodo in Horarios %}
           <tr>
-            <td>{{ periodo }}</td>
-            {% for dia in dias_semana %}
-            <td></td>
+            {% for linha1 in qts_resultados.0.1 %}
+            <td>{{ linha1 }}</td>
             {% endfor %}
           </tr>
-          {% endfor %}
+          <tr>
+            {% for linha2 in qts_resultados.0.2 %}
+            <td>{{ linha2 }}</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            {% for linha3 in qts_resultados.0.3 %}
+            <td>{{ linha3 }}</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            {% for linha4 in qts_resultados.0.4 %}
+            <td>{{ linha4 }}</td>
+            {% endfor %}
+          </tr>
         </tbody>
       </table>
+      {% endfor %}
     </div>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <!-- Adicione outras importações de script aqui, se necessário -->

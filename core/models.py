@@ -70,17 +70,17 @@ class Disciplina(Base):
 
 
 class turma(Base):
-    nome = models.CharField('Nome', max_length=100)
+    numero = models.IntegerField('Quantidade', default= True)
 
 class Disponibilidade(Base):
     semana = models.ManyToManyField(DiasSemana, verbose_name='Disponibilidade')
-    professor = models.ManyToManyField(Professor, verbose_name='Professores')
+    professor = models.ForeignKey(Professor, verbose_name='Professor', on_delete= models.CASCADE, default= True)
 
     def __str__(self):
         return self.get_professores()
 
     def get_professores(self):
-        return ", ".join([professor.nome for professor in self.professor.all()])
+        return ", ".join([self.professor.nome])
     
 class QTS(Base):
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
@@ -89,3 +89,4 @@ class QTS(Base):
 
     def __str__(self):
         return f"{self.professor.nome} - {self.disciplina.nome}"
+

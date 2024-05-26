@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.forms import CheckboxSelectMultiple
-from .models import Professor, Disciplina, DiasSemana, Horario, Disponibilidade
+from .models import Professor, Disciplina, DiasSemana, Horario, Disponibilidade, QTS
 from django.db import models 
 
 @admin.register(Professor)
@@ -33,4 +33,9 @@ class DisponibilidadeAdmin(admin.ModelAdmin):
     def get_professores(self, obj):
         return obj.get_professores()
     get_professores.short_description = 'Professores'
+
+@admin.register(QTS)
+class QtsAdmin(admin.ModelAdmin):
+    list_display = ('criado_em', 'modificado_em', 'ativo')
+
 
