@@ -586,4 +586,3 @@ class IndexView(TemplateView):
             qts_matrices[i] = qts_matriz
     
         return qts_matrices
-
