@@ -283,7 +283,8 @@ class IndexView(TemplateView):
                                 if disponibilidade2:
                                     if (qts_resultados2.disciplina.carga_horaria == 40 and
                                         qts_resultados2.disciplina not in disciplinas_usadas and
-                                        qts_resultados2.professor in professores_usados[dia]):
+                                        qts_resultados2.professor in professores_usados[dia] and
+                                        qts_resultados.professor == qts_resultados2.professor):
                                         disciplinas_usadas.add(qts_resultados2.disciplina)
                                         qts_matriz[3][dias_semana.index(dia) + 1] = qts_resultados2
                                         qts_matriz[4][dias_semana.index(dia) + 1] = qts_resultados2

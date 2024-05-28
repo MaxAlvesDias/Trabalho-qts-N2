@@ -25,18 +25,18 @@
       {% for matriz in montar_matriz.values %}
       <table class="table table-bordered">
         <thead>
-          <tr>
+          <tr style="width: 100px;">
             {% for header in matriz.0 %}
-            <th>{{ header }}</th>
+            <th style="width: 100px;">{{ header }}</th>
             {% endfor %}
           </tr>
         </thead>
         <tbody>
           {% for linha in matriz %}
           {% if not forloop.first %}
-          <tr>
+          <tr style="width: 100px;">
             {% for celula in linha %}
-            <td>{{ celula }}</td>
+            <td style="width: 100px;">{{ celula }}</td>
             {% endfor %}
           </tr>
           {% endif %}
