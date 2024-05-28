@@ -252,6 +252,7 @@ class IndexView(TemplateView):
                                                
                 disponibilidade_segunda = Disponibilidade.objects.filter(
                     semana__dia= 'seg',
+                    professor = qts_resultados_segunda.professor
                 ).first()
 
                 if disponibilidade_segunda:
@@ -288,31 +289,41 @@ class IndexView(TemplateView):
                         qts_matriz[2][1] = qts_resultados_segunda
  
                         for qts_resultados_segunda2 in qts:
-                            if (qts_resultados_segunda2.disciplina.carga_horaria == 40 and
-                            qts_resultados_segunda2.disciplina not in disciplinas_usadas and
-                            qts_resultados_segunda2.professor in professores_usados_segunda):
-                                disciplinas_usadas.add(qts_resultados_segunda2.disciplina)
-                                qts_matriz[3][1] = qts_resultados_segunda2
-                                qts_matriz[4][1] = qts_resultados_segunda2
- 
-                                break
-                        
-                            elif (qts_resultados_segunda2.disciplina.carga_horaria == 40 and
-                            qts_resultados_segunda2.disciplina not in disciplinas_usadas and
-                            qts_resultados_segunda2.professor not in professores_usados_segunda):
-                                disciplinas_usadas.add(qts_resultados_segunda2.disciplina)
-                                professores_usados_segunda.add(qts_resultados_segunda2.professor)
-                                qts_matriz[3][1] = qts_resultados_segunda2
-                                qts_matriz[4][1] = qts_resultados_segunda2
 
-                                break
+                            disponibilidade_segunda2 = Disponibilidade.objects.filter(
+                                semana__dia = 'seg',
+                                professor = qts_resultados_segunda2.professor
+                            )
 
+                            if disponibilidade_segunda2:
+
+                                if (qts_resultados_segunda2.disciplina.carga_horaria == 40 and
+                                qts_resultados_segunda2.disciplina not in disciplinas_usadas and
+                                qts_resultados_segunda2.professor in professores_usados_segunda):
+                                    disciplinas_usadas.add(qts_resultados_segunda2.disciplina)
+                                    qts_matriz[3][1] = qts_resultados_segunda2
+                                    qts_matriz[4][1] = qts_resultados_segunda2
+
+                                    break
+                    
+                                elif (qts_resultados_segunda2.disciplina.carga_horaria == 40 and
+                                qts_resultados_segunda2.disciplina not in disciplinas_usadas and
+                                qts_resultados_segunda2.professor not in professores_usados_segunda):
+                                    disciplinas_usadas.add(qts_resultados_segunda2.disciplina)
+                                    professores_usados_segunda.add(qts_resultados_segunda2.professor)
+                                    qts_matriz[3][1] = qts_resultados_segunda2
+                                    qts_matriz[4][1] = qts_resultados_segunda2
+
+                                    break
+
+                        break                
         # Terça-feira
 
             for qts_resultados_terca in qts:
                                                
                 disponibilidade_terca = Disponibilidade.objects.filter(
                     semana__dia= 'ter',
+                    professor = qts_resultados_terca.professor
                 ).first()
 
                 if disponibilidade_terca:
@@ -344,19 +355,28 @@ class IndexView(TemplateView):
                     elif (qts_resultados_terca.disciplina.carga_horaria == 40 and
                     qts_resultados_terca.professor not in professores_usados_terca and
                     qts_resultados_terca.disciplina not in disciplinas_usadas):
-                            disciplinas_usadas.add(qts_resultados_terca.disciplina)  
-                            professores_usados_terca.add(qts_resultados_terca.professor)
-                            qts_matriz[1][2] = qts_resultados_terca
-                            qts_matriz[2][2] = qts_resultados_terca
-
+                        disciplinas_usadas.add(qts_resultados_terca.disciplina)  
+                        professores_usados_terca.add(qts_resultados_terca.professor)
+                        qts_matriz[1][2] = qts_resultados_terca
+                        qts_matriz[2][2] = qts_resultados_terca
                             
-                            for qts_resultados_terca2 in qts:
+                        for qts_resultados_terca2 in qts:
+
+                            disponibilidade_terca2 = Disponibilidade.objects.filter(
+                                semana__dia = 'ter',
+                                professor = qts_resultados_terca2.professor
+                            )
+
+                            if disponibilidade_terca2:
+
                                 if (qts_resultados_terca2.disciplina.carga_horaria == 40 and
                                 qts_resultados_terca2.disciplina not in disciplinas_usadas and
                                 qts_resultados_terca2.professor in professores_usados_terca):
                                     disciplinas_usadas.add(qts_resultados_terca2.disciplina)
                                     qts_matriz[3][2] = qts_resultados_terca2
                                     qts_matriz[4][2] = qts_resultados_terca2
+
+                                    break
 
                                 elif (qts_resultados_terca2.disciplina.carga_horaria == 40 and
                                 qts_resultados_terca2.disciplina not in disciplinas_usadas and
@@ -366,7 +386,9 @@ class IndexView(TemplateView):
                                     qts_matriz[3][2] = qts_resultados_terca2
                                     qts_matriz[4][2] = qts_resultados_terca2
 
-                                break
+                                    break
+
+                        break        
 
         # Quarta-feira
 
@@ -374,6 +396,7 @@ class IndexView(TemplateView):
                                                
                 disponibilidade_quarta = Disponibilidade.objects.filter(
                     semana__dia= 'qua',
+                    professor = qts_resultados_quarta.professor
                 ).first()
 
                 if disponibilidade_quarta:
@@ -386,7 +409,6 @@ class IndexView(TemplateView):
                         qts_matriz[2][3] = qts_resultados_quarta
                         qts_matriz[3][3] = qts_resultados_quarta
                         qts_matriz[4][3] = qts_resultados_quarta
-
 
                         break
 
@@ -405,19 +427,29 @@ class IndexView(TemplateView):
                     elif (qts_resultados_quarta.disciplina.carga_horaria == 40 and
                     qts_resultados_quarta.professor not in professores_usados_quarta and
                     qts_resultados_quarta.disciplina not in disciplinas_usadas):
-                            disciplinas_usadas.add(qts_resultados_quarta.disciplina)  
-                            professores_usados_quarta.add(qts_resultados_quarta.professor)
-                            qts_matriz[1][3] = qts_resultados_quarta
-                            qts_matriz[2][3] = qts_resultados_quarta
+                        disciplinas_usadas.add(qts_resultados_quarta.disciplina)  
+                        professores_usados_quarta.add(qts_resultados_quarta.professor)
+                        qts_matriz[1][3] = qts_resultados_quarta
+                        qts_matriz[2][3] = qts_resultados_quarta
 
                             
-                            for qts_resultados_quarta2 in qts:
+                        for qts_resultados_quarta2 in qts:
+
+                            disponibilidade_quarta2 = Disponibilidade.objects.filter(
+                                semana__dia = 'qua',
+                                professor = qts_resultados_quarta2.professor
+                            )
+                                
+                            if disponibilidade_quarta2:
+
                                 if (qts_resultados_quarta2.disciplina.carga_horaria == 40 and
                                 qts_resultados_quarta2.disciplina not in disciplinas_usadas and
                                 qts_resultados_quarta2.professor in professores_usados_quarta):
                                     disciplinas_usadas.add(qts_resultados_quarta2.disciplina)
                                     qts_matriz[3][3] = qts_resultados_quarta2
                                     qts_matriz[4][3] = qts_resultados_quarta2
+
+                                    break             
 
                                 elif (qts_resultados_quarta2.disciplina.carga_horaria == 40 and
                                 qts_resultados_quarta2.disciplina not in disciplinas_usadas and
@@ -427,7 +459,9 @@ class IndexView(TemplateView):
                                     qts_matriz[3][3] = qts_resultados_quarta2
                                     qts_matriz[4][3] = qts_resultados_quarta2
 
-                                break
+                                    break
+
+                        break
 
         # Quinta-feira
 
@@ -435,6 +469,7 @@ class IndexView(TemplateView):
                                                
                 disponibilidade_quinta = Disponibilidade.objects.filter(
                     semana__dia= 'qui',
+                    professor = qts_resultados_quinta.professor
                 ).first()
 
                 if disponibilidade_quinta:
@@ -466,19 +501,29 @@ class IndexView(TemplateView):
                     elif (qts_resultados_quinta.disciplina.carga_horaria == 40 and
                     qts_resultados_quinta.professor not in professores_usados_quinta and
                     qts_resultados_quinta.disciplina not in disciplinas_usadas):
-                            disciplinas_usadas.add(qts_resultados_quinta.disciplina)  
-                            professores_usados_quinta.add(qts_resultados_quinta.professor)
-                            qts_matriz[1][4] = qts_resultados_quinta
-                            qts_matriz[2][4] = qts_resultados_quinta
+                        disciplinas_usadas.add(qts_resultados_quinta.disciplina)  
+                        professores_usados_quinta.add(qts_resultados_quinta.professor)
+                        qts_matriz[1][4] = qts_resultados_quinta
+                        qts_matriz[2][4] = qts_resultados_quinta
 
                             
-                            for qts_resultados_quinta2 in qts:
+                        for qts_resultados_quinta2 in qts:
+
+                            disponibilidade_quinta2 = Disponibilidade.objects.filter(
+                                semana__dia = 'qui',
+                                professor = qts_resultados_quinta2.professor
+                            )
+
+                            if disponibilidade_quinta2:
+
                                 if (qts_resultados_quinta2.disciplina.carga_horaria == 40 and
                                 qts_resultados_quinta2.disciplina not in disciplinas_usadas and
                                 qts_resultados_quinta2.professor in professores_usados_quinta):
                                     disciplinas_usadas.add(qts_resultados_quinta2.disciplina)
                                     qts_matriz[3][4] = qts_resultados_quinta2
                                     qts_matriz[4][4] = qts_resultados_quinta2
+
+                                    break
 
                                 elif (qts_resultados_quinta2.disciplina.carga_horaria == 40 and
                                 qts_resultados_quinta2.disciplina not in disciplinas_usadas and
@@ -488,7 +533,9 @@ class IndexView(TemplateView):
                                     qts_matriz[3][4] = qts_resultados_quinta2
                                     qts_matriz[4][4] = qts_resultados_quinta2
 
-                                break
+                                    break
+
+                        break
 
         # sexta-feira
 
@@ -496,6 +543,7 @@ class IndexView(TemplateView):
                                                
                 disponibilidade_sexta = Disponibilidade.objects.filter(
                     semana__dia= 'sex',
+                    professor = qts_resultados_sexta.professor
                 ).first()
 
                 if disponibilidade_sexta:
@@ -508,7 +556,6 @@ class IndexView(TemplateView):
                         qts_matriz[2][5] = qts_resultados_sexta
                         qts_matriz[3][5] = qts_resultados_sexta
                         qts_matriz[4][5] = qts_resultados_sexta
-
 
                         break
 
@@ -534,22 +581,34 @@ class IndexView(TemplateView):
 
                             
                             for qts_resultados_sexta2 in qts:
-                                if (qts_resultados_sexta2.disciplina.carga_horaria == 40 and
-                                qts_resultados_sexta2.disciplina not in disciplinas_usadas and
-                                qts_resultados_sexta2.professor in professores_usados_sexta):
-                                    disciplinas_usadas.add(qts_resultados_sexta2.disciplina)
-                                    qts_matriz[3][5] = qts_resultados_sexta2
-                                    qts_matriz[4][5] = qts_resultados_sexta2
 
-                                elif (qts_resultados_sexta2.disciplina.carga_horaria == 40 and
-                                qts_resultados_sexta2.disciplina not in disciplinas_usadas and
-                                qts_resultados_sexta2.professor not in professores_usados_sexta):
-                                    disciplinas_usadas.add(qts_resultados_sexta2.disciplina)
-                                    professores_usados_sexta.add(qts_resultados_sexta2.professor)
-                                    qts_matriz[3][5] = qts_resultados_sexta2
-                                    qts_matriz[4][5] = qts_resultados_sexta2
+                                disponibilidade_sexta2 = Disponibilidade.objects.filter(
+                                    semana__dia = 'sex',
+                                    professor = qts_resultados_sexta2.professor
+                                )
 
-                                break
+                                if disponibilidade_sexta2:
+
+                                    if (qts_resultados_sexta2.disciplina.carga_horaria == 40 and
+                                    qts_resultados_sexta2.disciplina not in disciplinas_usadas and
+                                    qts_resultados_sexta2.professor in professores_usados_sexta):
+                                        disciplinas_usadas.add(qts_resultados_sexta2.disciplina)
+                                        qts_matriz[3][5] = qts_resultados_sexta2
+                                        qts_matriz[4][5] = qts_resultados_sexta2
+
+                                        break
+
+                                    elif (qts_resultados_sexta2.disciplina.carga_horaria == 40 and
+                                    qts_resultados_sexta2.disciplina not in disciplinas_usadas and
+                                    qts_resultados_sexta2.professor not in professores_usados_sexta):
+                                        disciplinas_usadas.add(qts_resultados_sexta2.disciplina)
+                                        professores_usados_sexta.add(qts_resultados_sexta2.professor)
+                                        qts_matriz[3][5] = qts_resultados_sexta2
+                                        qts_matriz[4][5] = qts_resultados_sexta2
+
+                                        break
+
+                            break
 
             qts_matrices[i] = qts_matriz
 
