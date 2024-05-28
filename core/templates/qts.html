@@ -22,36 +22,25 @@
   <body>
     <div class="container">
       <h1>Horários</h1>
-      {% for i in montar_matriz %}
+      {% for matriz in montar_matriz.values %}
       <table class="table table-bordered">
         <thead>
           <tr>
-            {% for header in montar_matriz.0.0 %}
+            {% for header in matriz.0 %}
             <th>{{ header }}</th>
             {% endfor %}
           </tr>
         </thead>
         <tbody>
+          {% for linha in matriz %}
+          {% if not forloop.first %}
           <tr>
-            {% for linha1 in montar_matriz.0.1 %}
-            <td>{{ linha1 }}</td>
+            {% for celula in linha %}
+            <td>{{ celula }}</td>
             {% endfor %}
           </tr>
-          <tr>
-            {% for linha2 in montar_matriz.0.2 %}
-            <td>{{ linha2 }}</td>
-            {% endfor %}
-          </tr>
-          <tr>
-            {% for linha3 in montar_matriz.0.3 %}
-            <td>{{ linha3 }}</td>
-            {% endfor %}
-          </tr>
-          <tr>
-            {% for linha4 in montar_matriz.0.4 %}
-            <td>{{ linha4 }}</td>
-            {% endfor %}
-          </tr>
+          {% endif %}
+          {% endfor %}
         </tbody>
       </table>
       {% endfor %}
