@@ -1,0 +1,53 @@
+{% load static %}
+
+<!-- book section -->
+<section class="book_section layout_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <form id="criarTurmasForm" method="post" action="{% url 'qts' %}" target="qtsWindow">
+          {% csrf_token %}
+          <h4>Criar <span>Turmas</span></h4>
+          <div class="form-row">
+            <div class="form-group col-lg-4">
+              <label for="inputQuantidade">Quantidade de turmas</label>
+              <input
+                type="number"
+                class="form-control"
+                id="inputQuantidade"
+                name="quantidade"
+                placeholder=""
+              />
+            </div>
+          </div>
+          <br />
+          <div class="form-row">
+            <div class="form-group col-lg-4">
+              <div class="btn-box">
+                <button type="button" class="btn" onclick="submitForm()">Criar Turmas</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function submitForm() {
+    const form = document.getElementById('criarTurmasForm');
+    const quantidade = document.getElementById('inputQuantidade').value;
+
+    if (quantidade) {
+      const screenWidth = window.screen.availWidth;
+      const screenHeight = window.screen.availHeight;
+      const qtsWindow = window.open('', 'qtsWindow', `width=${screenWidth},height=${screenHeight}`);
+      form.submit();
+      qtsWindow.focus();
+    } else {
+      alert('Por favor, insira a quantidade de turmas.');
+    }
+  }
+</script>
+<!-- end book section -->

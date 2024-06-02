@@ -303,4 +303,18 @@ class IndexView(TemplateView):
             qts_matrices[i] = qts_matriz
 
         return qts_matrices
+    
+class QtsView(TemplateView):
+    template_name = 'qts.html'
+
+    def post(self, request, *args, **kwargs):
+        quantidade = int(request.POST.get('quantidade', 0))
+        context = self.get_context_data()
+        context['quantidade'] = quantidade
+        context['qts_resultados'] = IndexView.create_qts_matrices(self)
+        context['montar_matriz'] = IndexView.montar_qts(self, quantidade)
+
+        return render(request, self.template_name, context)
+    
+
 
